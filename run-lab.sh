@@ -1,7 +1,7 @@
 #!/bin/bash
 
 repolink=$1
-installPath=$2
+installPath="/repos"
 readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
 arraylen=`expr ${#strarr[*]} - 1`
 usernameIndex=`expr ${arraylen} - 1`
@@ -43,5 +43,5 @@ if [ ! -d "node_modules" ]; then
 fi
 npm test
 #cleaning up
-cd installPath
+cd ../../
 rm -r -f $username
