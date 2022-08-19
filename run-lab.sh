@@ -1,7 +1,7 @@
 #!/bin/bash
 
 repolink=$1
-installPath="/repos"
+installPath="repos"
 readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
 arraylen=`expr ${#strarr[*]} - 1`
 usernameIndex=`expr ${arraylen} - 1`
