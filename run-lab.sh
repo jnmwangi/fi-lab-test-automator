@@ -3,9 +3,6 @@
 repolink=$1
 workingdir=$(pwd)
 installPath="${workingdir}/repos"
-if [ ! -d $installPath ]; then
-    mkdir $installPath
-fi
 readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
 arraylen=`expr ${#strarr[*]} - 1`
 usernameIndex=`expr ${arraylen} - 1`
@@ -14,6 +11,11 @@ username=${strarr[usernameIndex]}
 readarray -d . -t repoparts <<<"$reponame"
 reponame=${repoparts[0]}
 echo "Welcome to lab automation"
+
+
+if [ ! -d $installPath ]; then
+    mkdir $installPath
+fi
 cd $installPath
 mkdir $username && cd $username
 
@@ -43,9 +45,10 @@ fi
 
 cd $reponame
 if [ ! -d "node_modules" ]; then
-    npm install
+    npm install && npm test
+else
+    npm test
 fi
-npm test
 #cleaning up
-cd ../../
+cd installPath
 rm -r -f $username
