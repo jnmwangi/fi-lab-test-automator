@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <script src="/javascripts/main.js"></script>
+</head>
+
+<body>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>Welcome to <%= title %>
+  </p>
+
+  <h3>Lab Repository</h3>
+  <p>Enter the lab repository link below</p>
+  <form onsubmit="runtest(event)">
+    <div class="form-group p-2">
+      <input type="url" name="repolink" class="form-control" id="repolink" placeholder="Repository Link: https://" required />
+    </div>
+
+    <div class="form-group p-2">
+      <button type="submit" class="btn btn-primary" id="submitButton">Submit Link</button>
+    </div>
+
+    <div id="output"></div>
+  </form>
+</body>
+
+</html>

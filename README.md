@@ -1,2 +1,2 @@
-# fi-lab-test-automator
-This is an application that automates lab tests
+# FI Labs Automator
+This is an application that automates lab tests and gives the results and cleans the cloned repository.
