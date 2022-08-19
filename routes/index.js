@@ -13,11 +13,10 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next){
   
   const repoLink = req.body.repolink;
-  const basePath = path.resolve(__dirname).replace('/lab-automator/routes', '');
+  const basePath = path.resolve(__dirname).replace('/routes', '');
   const script = `${basePath}/run-lab.sh`;
 
-  console.log(`${basePath}/lab-automator/repos`);
-  const spnw = spawn('bash', [script, repoLink, basePath+'/lab-automator/repos']);
+  const spnw = spawn('bash', [script, repoLink, basePath+'/repos']);
   let response = '';
   spnw.stdout.on('data', data=>{
     const txtDecode = new TextDecoder("utf-8");
