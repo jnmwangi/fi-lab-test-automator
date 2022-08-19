@@ -3,7 +3,7 @@
 repolink=$1
 workingdir=$(pwd)
 installPath="${workingdir}/repos"
-if [ !-d $installPath ]; then
+if [ ! -d $installPath ]; then
     mkdir $installPath
 fi
 readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
