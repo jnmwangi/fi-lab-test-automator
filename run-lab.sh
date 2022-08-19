@@ -1,7 +1,11 @@
 #!/bin/bash
 
 repolink=$1
-installPath="/app/repos"
+workingdir=$(pwd)
+installPath="${workingdir}/repos"
+if [ !-d $installPath ]; then
+    mkdir $installPath
+fi
 readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
 arraylen=`expr ${#strarr[*]} - 1`
 usernameIndex=`expr ${arraylen} - 1`
