@@ -49,5 +49,5 @@ else
     npm test
 fi
 #cleaning up
-# cd installPath
-# rm -r -f $username
+cd installPath
+rm -r -f $username
