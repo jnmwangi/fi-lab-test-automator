@@ -44,7 +44,7 @@ fi
 
 cd $reponame
 if [ ! -d "node_modules" ]; then
-    npm install && npm test
+    npm install --production=false && npm test
 else
     npm test
 fi
