@@ -1,9 +1,8 @@
 #!/bin/bash
 
+# Read command arguments and extract repolink, reponame and username
 repolink=$1
-workingdir=$(pwd)
-installPath="${workingdir}/repos"
-readarray -d / -t strarr <<<"$repolink" #split a string based on the delimiter ':'
+readarray -d / -t strarr <<<"$repolink"
 arraylen=`expr ${#strarr[*]} - 1`
 usernameIndex=`expr ${arraylen} - 1`
 reponame=${strarr[arraylen]}
@@ -12,7 +11,7 @@ readarray -d . -t repoparts <<<"$reponame"
 reponame=${repoparts[0]}
 echo "Welcome to lab automation"
 
-
+installPath="repos"
 if [ ! -d $installPath ]; then
     mkdir $installPath
 fi
@@ -26,7 +25,7 @@ fi
 git clone $repolink
 #continue after checking repo existance
 
-# Hand any cloning failure by retrying 5 times
+# Handle any cloning failure by retrying 5 times
 if [ ! -d $reponame ]; then
     tries=0
    while [ $tries -lt 5 ]
@@ -41,7 +40,7 @@ if [ ! -d $reponame ]; then
         fi
     done
 fi
-# Stop handling the clode failures
+# Stop handling the clone failures
 
 cd $reponame
 if [ ! -d "node_modules" ]; then
@@ -50,5 +49,5 @@ else
     npm test
 fi
 #cleaning up
-cd installPath
-rm -r -f $username
+# cd installPath
+# rm -r -f $username
