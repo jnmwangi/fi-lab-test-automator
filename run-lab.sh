@@ -68,7 +68,7 @@ if [ ! -d "node_modules" ]; then
 fi
 
 if [ $isReactApp -eq 1 ]; then 
-    npx react-scripts test --watchAll=false --no-color 2> tests.txt
+    npm test -- --watchAll=false --no-color 2> tests.txt
     cat tests.txt
 else
     npm test
