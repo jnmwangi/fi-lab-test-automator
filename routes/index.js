@@ -32,10 +32,10 @@ router.post('/', function(req, res, next){
     console.log(responseText); */
   });
   spnw.stdout.on('end', data=>{
-    res.json({data: response});
+    res.send(response);
   })
   spnw.stderr.on('error', error=>{
-    res.json({error});
+    res.text(error);
   });
 
   /* exec(`bash ${script} ${repoLink} ${basePath}/lab-automator/repos`)

@@ -12,13 +12,10 @@ function runtest(evt){
             "Content-Type":"application/json"
         }
     })
-    .then(r=>r.json())
+    .then(r=>r.text())
     .then(resp=>{
-        if(resp.error){
-            throw new Error(resp.error);
-        }
         const output = document.getElementById('output');
-        output.innerHTML = resp.data.replace(/\n/g, "<br />");
+        output.innerHTML = resp.replace(/\n/g, "<br />");
         output.scrollTop = output.scrollHeight;
     })
     .catch(e=>{
