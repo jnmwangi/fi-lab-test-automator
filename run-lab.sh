@@ -44,10 +44,9 @@ fi
 
 cd $reponame
 if [ ! -d "node_modules" ]; then
-    npm install --production=false && npm test
-else
-    npm test
+    npm install --production=false
 fi
+npm test
 #cleaning up
 cd installPath
 rm -r -f $username
