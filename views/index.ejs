@@ -9,19 +9,26 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
 
   <script src="/javascripts/main.js"></script>
+
+  <style>
+    #output{
+      max-height: 450px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 
-<body>
+<body class="container">
   <h1>
     <%= title %>
   </h1>
-  <p>Welcome to <%= title %>
-  </p>
+  <p>Automate all phase-0, phase-1 and phase-2 tests without cloning labs to your device</p>
 
   <h3>Lab Repository</h3>
-  <p>Enter the lab repository link below</p>
-  <form onsubmit="runtest(event)">
-    <div class="form-group p-2">
+  <p>Copy and paste the lab repository link below and submit link</p>
+  <form onsubmit="runtest(event)" class="d-flex">
+    <div class="form-group p-2 w-75">
       <input type="url" name="repolink" class="form-control" id="repolink" placeholder="Repository Link: https://" required />
     </div>
 

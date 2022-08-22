@@ -11,12 +11,17 @@ readarray -d . -t repoparts <<<"$reponame"
 reponame=${repoparts[0]}
 echo "Welcome to lab automation"
 
-installPath="repos"
+workingDir=$(pwd)
+repoDir="/repos"
+installPath="$workingDir$repoDir"
 if [ ! -d $installPath ]; then
     mkdir $installPath
 fi
 cd $installPath
-mkdir $username && cd $username
+if [ ! -d $username ]; then
+    mkdir $username
+fi
+cd $username
 
 # handle when repository already exists
 if [ -d $reponame ]; then
@@ -43,10 +48,32 @@ fi
 # Stop handling the clone failures
 
 cd $reponame
+
+#inpect the package.json file to determine if it's react
+isReactApp=0
+while read line; do
+    for word in $line; do
+        if [ $word == \"react\": ]; then
+            isReactApp=1
+            break
+        fi
+    done
+    if [ $isReactApp -eq 1 ]; then 
+        break
+    fi
+done < package.json
+
 if [ ! -d "node_modules" ]; then
     npm install --production=false
 fi
-npm test
+
+if [ $isReactApp -eq 1 ]; then 
+    npx react-scripts test --watchAll=false --no-color 2> tests.txt
+    cat tests.txt
+else
+    npm test
+fi
+
 #cleaning up
-cd installPath
+cd $installPath
 rm -r -f $username

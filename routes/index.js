@@ -18,10 +18,17 @@ router.post('/', function(req, res, next){
 
   const spnw = spawn('bash', [script, repoLink, basePath+'/repos']);
   let response = '';
+  spnw.stdin.setDefaultEncoding("utf-8");
   spnw.stdout.on('data', data=>{
     const txtDecode = new TextDecoder("utf-8");
     const responseText = txtDecode.decode(data);
     response += responseText;
+    /* if(responseText.indexOf('--watchAll') > -1){
+      // writing to the child process to quet
+      console.log("Quiting..");
+      spnw.stdin.write('q\n');
+      spnw.stdin.end();
+    } */
     console.log(responseText);
   });
   spnw.stdout.on('end', data=>{
