@@ -7,7 +7,7 @@ const path = require('path');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'FI Phase 1 Lab Test Automator' });
+  res.render('index', { title: 'FI Lab Test Automator' });
 });
 
 router.post('/', function(req, res, next){
@@ -28,8 +28,8 @@ router.post('/', function(req, res, next){
       console.log("Quiting..");
       spnw.stdin.write('q\n');
       spnw.stdin.end();
-    } */
-    console.log(responseText);
+    }
+    console.log(responseText); */
   });
   spnw.stdout.on('end', data=>{
     res.json({data: response});

@@ -17,8 +17,9 @@ function runtest(evt){
         if(resp.error){
             throw new Error(resp.error);
         }
-        document.getElementById('output').innerHTML = resp.data.replace(/\n/g, "<br />");
-        console.log(resp);
+        const output = document.getElementById('output');
+        output.innerHTML = resp.data.replace(/\n/g, "<br />");
+        output.scrollTop = output.scrollHeight;
     })
     .catch(e=>{
         console.log(e.message);
