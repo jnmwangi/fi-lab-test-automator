@@ -1,4 +1,5 @@
-const ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
+let ws;
+let wsStatus = 'open';
 let output;
 function runtest(evt) {
     evt.preventDefault();
@@ -37,18 +38,34 @@ function test(evt) {
 
     document.getElementById('submitButton').disabled = true;
     document.getElementById('output').innerHTML = '';
-    ws.send(JSON.stringify({ repolink: link }));
+
+    if(wsStatus == 'closed'){
+        connectWs(()=>ws.send(JSON.stringify({ repolink: link })));
+    }
+    else ws.send(JSON.stringify({ repolink: link }));
 }
 
-ws.onmessage = (evt) => {
-    if (evt.data) {
-        if(evt.data === 'the-very-end-of-it'){
-            document.getElementById('submitButton').disabled = false;
-            return;
+function connectWs(callback){
+    ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
+
+    if(callback){
+        ws.onopen = callback;
+    }
+
+    ws.onmessage = (evt) => {
+        if (evt.data) {
+            if(evt.data === 'the-very-end-of-it'){
+                document.getElementById('submitButton').disabled = false;
+                return;
+            }
+            output.innerHTML += evt.data.replace(/\n/g, "<br />");
+            output.scrollTop = output.scrollHeight;
+            // console.log(evt.data);
         }
-        output.innerHTML += evt.data.replace(/\n/g, "<br />");
-        output.scrollTop = output.scrollHeight;
-        // console.log(evt.data);
+    }
+    
+    ws.onclose = (evt)=>{
+        wsStatus = 'closed';
     }
 }
 
