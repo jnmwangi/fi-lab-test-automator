@@ -10,14 +10,18 @@ module.exports = (repoLink, ws) => {
     const spnw = spawn('bash', [script, repoLink, basePath + '/repos']);
     // let response = '';
     spnw.stdin.setDefaultEncoding("utf-8");
+    let interval = setInterval(()=>ws.send(''), 500);
     spnw.stdout.on('data', data => {
         const txtDecode = new TextDecoder("utf-8");
         const responseText = txtDecode.decode(data);
+        
         ws.send(responseText);
     });
     spnw.stdout.on('end', data => {
         // res.send(response);
         ws.send('the-very-end-of-it');
+        clearInterval(interval);
+        interval = null;
     })
     spnw.stderr.on('error', error => {
         // res.text(error);
