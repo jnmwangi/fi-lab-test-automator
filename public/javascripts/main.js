@@ -1,4 +1,5 @@
 let ws;
+connectWs();
 let wsStatus = 'open';
 let output;
 function runtest(evt) {
