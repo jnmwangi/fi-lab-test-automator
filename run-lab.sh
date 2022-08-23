@@ -72,8 +72,11 @@ fi
 
 echo "Running tests..."
 if [ $isReactApp -eq 1 ]; then 
-    npm test -- --watchAll=false --no-color 2> tests.txt
-    cat tests.txt
+    # npm install jest-junit
+    # npx react-scripts test --coverage --ci --testResultsProcessor="jest-junit" --watchAll=false
+    # npm test -- --watchAll=false --no-color 2> tests.txt    
+    npx react-scripts test --watchAll=false --no-color 2> tests
+    cat tests
 else
     npm test
 fi
