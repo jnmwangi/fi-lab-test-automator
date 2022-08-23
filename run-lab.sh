@@ -10,6 +10,7 @@ username=${strarr[usernameIndex]}
 readarray -d . -t repoparts <<<"$reponame"
 reponame=${repoparts[0]}
 echo "Welcome to lab automation"
+echo "Running Tests, please wait..."
 
 workingDir=$(pwd)
 repoDir="/repos"
@@ -64,9 +65,12 @@ while read line; do
 done < package.json
 
 if [ ! -d "node_modules" ]; then
-    npm install --production=false
+    echo "Installing packages remotely..."
+    npm install --omit=dev
 fi
 
+
+echo "Running tests..."
 if [ $isReactApp -eq 1 ]; then 
     npm test -- --watchAll=false --no-color 2> tests.txt
     cat tests.txt

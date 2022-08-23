@@ -1,10 +1,12 @@
-function runtest(evt){
+const ws = new WebSocket(location.origin.replace(/^http/, 'ws'));
+let output;
+function runtest(evt) {
     evt.preventDefault();
     const form = evt.target;
     const link = form.repolink.value;
 
     document.getElementById('submitButton').disabled = true;
-    document.getElementById('output').innerHTML = 'Running the tests, please wait...';
+    document.getElementById('output').innerHTML = 'Requesting test, please wait...';
     fetch('/', {
         method:'POST', 
         body: `{"repolink":"${link}"}`,
@@ -27,6 +29,30 @@ function runtest(evt){
     });
 }
 
-document.addEventListener("DOMContentLoaded", ()=>{
-    console.log("Content is ready")
+function test(evt) {
+    console.log('testing it')
+    evt.preventDefault();
+    const form = evt.target;
+    const link = form.repolink.value;
+
+    document.getElementById('submitButton').disabled = true;
+    document.getElementById('output').innerHTML = '';
+    ws.send(JSON.stringify({ repolink: link }));
+}
+
+ws.onmessage = (evt) => {
+    if (evt.data) {
+        if(evt.data === 'the-very-end-of-it'){
+            document.getElementById('submitButton').disabled = false;
+            return;
+        }
+        output.innerHTML += evt.data.replace(/\n/g, "<br />");
+        output.scrollTop = output.scrollHeight;
+        // console.log(evt.data);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    output = document.getElementById('output');
+    // console.log("Content is ready")
 });
