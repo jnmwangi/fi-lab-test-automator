@@ -65,8 +65,8 @@ while read line; do
 done < package.json
 
 if [ ! -d "node_modules" ]; then
-    echo "Installing packages remotely..."
-    npm install --omit=dev
+    echo "Installing node packages remotely..."
+    npm install --production=false
 fi
 
 

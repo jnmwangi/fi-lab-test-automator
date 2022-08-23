@@ -31,6 +31,7 @@ function runtest(evt) {
     });
 }
 
+let start = new Date();
 function test(evt) {
     console.log('testing it')
     evt.preventDefault();
@@ -40,6 +41,7 @@ function test(evt) {
     document.getElementById('submitButton').disabled = true;
     document.getElementById('output').innerHTML = '';
 
+    start = new Date();
     if(wsStatus == 'closed'){
         connectWs(()=>ws.send(JSON.stringify({ repolink: link })));
     }
@@ -59,6 +61,16 @@ function connectWs(callback){
                 document.getElementById('submitButton').disabled = false;
                 return;
             }
+
+            if(evt.data === 'keep-alive'){
+                const now = new Date();
+                const diff = now.getTime() - start.getTime();
+                const diffInMinutes = diff / 1000 / 60;
+                const diffSeconds = (((diff / 1000 / 60) % 60) - Math.floor(diff / 1000 / 60) % 60) * 60;
+                document.getElementById('timer').innerHTML = `${Math.floor(diffInMinutes)} Min ${Math.round(diffSeconds)} Secs`;
+                return;
+            }
+
             output.innerHTML += evt.data.replace(/\n/g, "<br />");
             output.scrollTop = output.scrollHeight;
             // console.log(evt.data);
