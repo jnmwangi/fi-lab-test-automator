@@ -10,7 +10,7 @@ module.exports = (repoLink, ws) => {
     const spnw = spawn('bash', [script, repoLink, basePath + '/repos']);
     // let response = '';
     spnw.stdin.setDefaultEncoding("utf-8");
-    let interval = setInterval(()=>ws.send(''), 500);
+    let interval = setInterval(()=>ws.send(''), 1000);
     spnw.stdout.on('data', data => {
         const txtDecode = new TextDecoder("utf-8");
         const responseText = txtDecode.decode(data);
